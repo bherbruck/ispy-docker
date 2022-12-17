@@ -1,0 +1,24 @@
+version: '3.9'
+
+services:
+  ispy:
+    image: doitandbedone/ispyagentdvr
+    container_name: ispy
+    restart: unless-stopped
+    ports:
+      - 8090:8090
+      - 3478:3478/udp
+      - 50000-50010:50000-50010/udp
+    volumes:
+      - ispy-config:/agent/Media/XML/
+      - ispy-media:/agent/Media/WebServerRoot/Media/
+      - ispy-commands:/agent/Commands/
+
+  proxy:
+    build: ./proxy
+    network_mode: host
+
+volumes:
+  ispy-config:
+  ispy-media:
+  ispy-commands:
